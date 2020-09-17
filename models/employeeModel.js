@@ -42,7 +42,7 @@ Employee.getAllEmployees = result => {
 }
 
 Employee.getPayRoleByEmployeeId = (employeeId, result) => {
-    sql = `SELECT e.emp_id,
+    sql = `SELECT
     e.emp_name,
     pr.basic_pay,
     pr.pay_month,
@@ -51,8 +51,8 @@ Employee.getPayRoleByEmployeeId = (employeeId, result) => {
     pr.pay_deduction,
     pr.gross_pay,
     pr.net_pay
-    FROM tbl_employees e
-    LEFT JOIN tbl_pay_roles pr
+    FROM tbl_pay_roles pr 
+    LEFT JOIN tbl_employees e
     ON e.emp_id = pr.emp_id
     WHERE e.emp_id = ${employeeId} `
 
@@ -65,6 +65,25 @@ Employee.getPayRoleByEmployeeId = (employeeId, result) => {
 
         result(null, res)
     })
+}
+
+Employee.getEmployeeDailyAttendance = (employeeId, day, result) => {
+     sql = `SELECT e.emp_name,
+     a.attendance_status,
+     a.attendance_day
+     FROM tbl_attendance a
+     LEFT JOIN tbl_employees e
+     ON e.emp_id = a.employee_id
+     WHERE a.employee_id = ${employeeId} AND a.attendance_day = '${day}'`
+     
+     connection.query(sql, (err, res) => {
+         if (err) {
+             console.log("Error: ", err)
+             result(null, err)
+             return
+         }
+         result(null, res)
+     })
 }
 
 

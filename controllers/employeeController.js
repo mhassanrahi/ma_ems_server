@@ -13,7 +13,7 @@ exports.getAllEmployees = (req, res) => {
 }
 
 exports.getPayRoleByEmployeeId = (req, res) => {
-    employeeId = req.params.employeeId;
+    employeeId = req.params.employeeId
 
     Employee.getPayRoleByEmployeeId(employeeId, (err, data) => {
         if (err) {
@@ -28,6 +28,24 @@ exports.getPayRoleByEmployeeId = (req, res) => {
             }
         
         } else res.status(200).send(data)
+    })
+}
+
+exports.getEmployeeDailyAttendance = (req, res) => {
+    employeeId = req.params.employeeId
+    day = req.params.day;
+    Employee.getEmployeeDailyAttendance(employeeId, day, (err, data) => {
+        if (err) {
+            if (err.code === 404) {
+                res.status(404).send({
+                    message: `Daily attendance not found with employee id: ${employeeId}`
+                })
+            } else {
+                res.status(500).send({
+                    message: `Error retrieving Daily attendance with employee id: ${employeeId}`
+                })
+            }
+        } else res.status(200).send({data})
     })
 }
 
