@@ -41,7 +41,31 @@ Employee.getAllEmployees = result => {
     })
 }
 
+Employee.getPayRoleByEmployeeId = (employeeId, result) => {
+    sql = `SELECT e.emp_id,
+    e.emp_name,
+    pr.basic_pay,
+    pr.pay_month,
+    pr.overtime_rate,
+    pr.overtime_hours,
+    pr.pay_deduction,
+    pr.gross_pay,
+    pr.net_pay
+    FROM tbl_employees e
+    LEFT JOIN tbl_pay_roles pr
+    ON e.emp_id = pr.emp_id
+    WHERE e.emp_id = ${employeeId} `
 
+    connection.query(sql, (err, res) => {
+        if (err) {
+            console.log("Error: ", err)
+            result(null, err)
+            return;
+        }
+
+        result(null, res)
+    })
+}
 
 
 module.exports = Employee

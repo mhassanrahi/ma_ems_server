@@ -10,8 +10,6 @@ app.use(express.urlencoded({
 }))
 app.use(cors())
 
-// const conn = require('./connection');
-
 // Import routes
 const employeeRoutes = require('./routes/employeeRoutes')
 const payRoleRoutes = require('./routes/payRoleRoutes')
