@@ -41,6 +41,36 @@ Employee.getAllEmployees = result => {
     })
 }
 
+Employee.getEmployeesByDepartment = (dept_id, result) => {
+    sql = `SELECT e.emp_name,
+    d.dept_name,
+    jr.job_role_name,
+    pr.net_pay as salary,
+    e.emp_dob,
+    e.emp_doj,
+    e.emp_email,
+    e.emp_city,
+    e.emp_contact
+    FROM tbl_employees e
+    LEFT JOIN tbl_depts d
+    ON e.emp_dept = d.dept_id
+    LEFT JOIN tbl_job_roles jr
+    ON e.emp_role = jr.job_role_id
+    LEFT JOIN tbl_pay_roles pr
+    ON e.emp_id = pr.emp_id
+    WHERE e.emp_dept = ${dept_id} `
+
+    connection.query(sql, (err, res) => {
+        if (err) {
+            console.log("Error: ", err);
+            result(null, err);
+            return;
+        }
+
+        result(null, res)
+    })
+}
+
 Employee.getPayRoleByEmployeeId = (employeeId, result) => {
     sql = `SELECT
     e.emp_name,
@@ -75,7 +105,7 @@ Employee.getEmployeeDailyAttendance = (employeeId, day, result) => {
      LEFT JOIN tbl_employees e
      ON e.emp_id = a.employee_id
      WHERE a.employee_id = ${employeeId} AND a.attendance_day = '${day}'`
-     
+
      connection.query(sql, (err, res) => {
          if (err) {
              console.log("Error: ", err)

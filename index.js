@@ -12,8 +12,10 @@ app.use(cors())
 
 // Import routes
 const employeeRoutes = require('./routes/employeeRoutes')
+const departmentRoutes = require('./routes/departmentRoutes')
 
-app.use('/api/employees', employeeRoutes)
+app.use('/employees', employeeRoutes)
+app.use('/departments', departmentRoutes)
 
 
 
