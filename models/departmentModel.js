@@ -18,4 +18,18 @@ Department.getAllDepartments = result => {
     })
 }
 
+Department.getDepartmentById = (dept_id, result) => {
+    sql = 'SELECT * FROM tbl_depts WHERE dept_id = ?'
+
+    connection.query(sql, dept_id, (err, data) => {
+        if (err) {
+            console.log("Error: ", err);
+            result(null, err);
+            return;
+        }
+
+        result(null, data)
+    })
+}
+
 module.exports = Department
