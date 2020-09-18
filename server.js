@@ -15,6 +15,10 @@ const employeeRoutes = require('./routes/employeeRoutes')
 const departmentRoutes = require('./routes/departmentRoutes')
 const attendanceRoutes = require('./routes/attendanceRoutes')
 
+app.get('/', (req, res) => {
+    res.send('Welcome to EMS')
+})
+
 app.use('/employees', employeeRoutes)
 app.use('/departments', departmentRoutes)
 app.use('/attendance', attendanceRoutes)

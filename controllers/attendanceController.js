@@ -3,7 +3,7 @@ const Attendance = require('../models/attendanceModel')
 exports.getDailyAttendance = (req, res) => {
     const day = req.params.day
 
-    Attendance.getDailyAttendance(day, (err, data) => {
+     Attendance.getDailyAttendance(day, (err, data) => {
         if (err) {
                 res.status(500).send({
                     message: `Error retrieving Attendace of day: ${day}`
